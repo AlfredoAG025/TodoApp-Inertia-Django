@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import {computed, ref} from "vue";
+import { Link } from '@inertiajs/vue3';
 
 defineProps<{
   name: string;
 }>();
 
 const count = ref(0);
+
 function increment() {
   count.value++;
 }
@@ -15,9 +17,8 @@ const double = computed(() => count.value * 2);
 
 <template>
   <div>
-    <h1 class="title">Hello {{ name }} from Inertia + Django + Vite + Vue!</h1>
-    <button @click="increment">Add</button>
-    <p>Count: {{ count }}</p>
+    <h1 class="title">Index</h1>
+    <Link href="/notes">Notes</Link>
   </div>
 </template>
 
