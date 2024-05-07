@@ -42,6 +42,7 @@ def store_note(request: HttpRequest):
         note.save()
         return redirect('/notes')
     except ValidationError as e:
+        print(e.messages_dict)
         return redirect('/create_note', kwargs={'errors': e.messages_dict})
 
 

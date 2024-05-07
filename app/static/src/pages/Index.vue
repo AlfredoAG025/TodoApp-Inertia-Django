@@ -5,14 +5,6 @@ import { Link } from '@inertiajs/vue3';
 defineProps<{
   name: string;
 }>();
-
-const count = ref(0);
-
-function increment() {
-  count.value++;
-}
-
-const double = computed(() => count.value * 2);
 </script>
 
 <template>

@@ -2,11 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer no-tailwindcss {
-  /* This layer is disabled */
-  @variants {
-    .no-tailwindcss {
-      all: unset;
-    }
-  }
+ul {
+    list-style: disc;
+}
+
+ol {
+    list-style: decimal;
 }

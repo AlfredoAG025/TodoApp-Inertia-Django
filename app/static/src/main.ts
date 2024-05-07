@@ -3,6 +3,7 @@ import {createApp, h} from "vue";
 import {createInertiaApp} from "@inertiajs/vue3";
 import "./styles.css";
 import {Twitter} from "vue-color"
+import 'primeicons/primeicons.css'
 
 createInertiaApp({
     resolve: (name) => import(`./pages/${name}.vue`),
