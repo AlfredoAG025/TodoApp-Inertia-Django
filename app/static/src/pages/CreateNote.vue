@@ -1,14 +1,39 @@
 <script setup>
 import {QuillEditor} from '@vueup/vue-quill';
 
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 import {Link, router} from '@inertiajs/vue3';
-import {computed, reactive, ref} from "vue";
+import {computed, onMounted, reactive, ref} from "vue";
 import moment from "moment/moment.js";
 import {Icon} from "@iconify/vue";
 
-const props = defineProps({
-  errors: Object
+import "@melloware/coloris/dist/coloris.css";
+import Coloris from "@melloware/coloris";
+
+onMounted(() => {
+  Coloris.init();
+  Coloris(
+      {
+        el: "#coloris",
+        theme: 'polaroid',
+        wrap: true,
+        swatchesOnly: true,
+        format: 'hex',
+        swatches: [
+          '#264653',
+          '#2a9d8f',
+          '#e9c46a',
+          'rgb(244,162,97)',
+          '#e76f51',
+          '#d62828',
+          'navy',
+          '#07b',
+          '#0096c7',
+          '#00b4d880',
+          'rgba(0,119,182,0.8)'
+        ],
+      });
+  Coloris.close();
 });
 
 const note = reactive({
@@ -24,6 +49,8 @@ const formattedTimeStamp = computed(() => {
 });
 
 function submitNote(event) {
+  note.title = note.title.trim();
+
   router.post('/store_note', note);
 }
 
@@ -43,7 +70,16 @@ setInterval(() => {
         <Icon icon="solar:menu-dots-bold" class="w-8 h-8"/>
       </Link>
     </div>
-    {{ errors }}
+
+    <div class="mb-4 bg-rose-100 py-4 px-10 rounded shadow-md" v-if="Object.keys($page.props.errors).length > 0">
+      <div v-for="(value, name, index) in $page.props.errors" class="text-rose-600">
+        <strong class="capitalize">{{ name }}</strong>
+        <ul v-for="error in value">
+          <li>{{ error }}</li>
+        </ul>
+      </div>
+    </div>
+
     <form @submit.prevent="submitNote" class="flex flex-col gap-4">
 
       <small class="font-bold">{{ formattedTimeStamp }}</small>
@@ -55,18 +91,24 @@ setInterval(() => {
           v-model="note.title"
       />
       <QuillEditor
-          theme="snow"
+          ref="editor"
+          theme="bubble"
           placeholder="content..."
           name="content"
           contentType="html"
           v-model:content="note.content"
       />
-      <input
-          type="color"
-          v-model="note.color"
-          name="color"
+      Characteres {{ $refs.editor.content.length}}
+
+
+      <input type="text"
+             id="coloris"
+             v-model="note.color"
+             name="color"
       />
-      <button>Create</button>
+      <div class="flex justify-center">
+        <button class="bg-gray-700 text-white rounded-full font-bold py-2 px-8">Create</button>
+      </div>
     </form>
   </div>
 
