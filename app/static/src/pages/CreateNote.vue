@@ -98,7 +98,7 @@ setInterval(() => {
           contentType="html"
           v-model:content="note.content"
       />
-      Characteres {{ $refs.editor.content.length}}
+      Characteres {{  }}
 
 
       <input type="text"
